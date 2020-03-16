@@ -18,15 +18,15 @@ namespace PlanFood.Mvc
 
 			services.AddScoped<IBookService, BookService>();
 
-			services.AddMvc();
-		}
+            services.AddControllersWithViews();
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseBrowserLink();
+				
 				app.UseDeveloperExceptionPage();
 			}
 			else
@@ -36,11 +36,14 @@ namespace PlanFood.Mvc
 
 			app.UseStaticFiles();
 
-			app.UseMvc(routes =>
+            app.UseRouting();
+
+
+			app.UseEndpoints(endpoints =>
 			{
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "default",
-					template: "{controller}/{action}/{id?}");
+					pattern: "{controller=Home}/{action=Index}/{id?}");
 			});
 		}
 	}
