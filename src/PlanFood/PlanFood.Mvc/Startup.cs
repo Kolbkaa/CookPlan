@@ -17,6 +17,7 @@ namespace PlanFood.Mvc
 			services.AddDbContext<PlanFoodContext>(builer => builer.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=PlanFood;Integrated Security=True"));
 
 			services.AddScoped<IBookService, BookService>();
+			services.AddScoped<IRecipeService, RecipeService>();
 
             services.AddControllersWithViews();
         }
