@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using PlanFood.Mvc.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using PlanFood.Mvc.Models.Db;
 
 namespace PlanFood.Mvc.Context
@@ -15,5 +10,6 @@ namespace PlanFood.Mvc.Context
 		}
 
 		public DbSet<Book> Books { get; set; }
+		public DbSet<DayName> DayNames { get; set; }
 	}
 }
