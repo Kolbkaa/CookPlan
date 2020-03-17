@@ -19,16 +19,16 @@ namespace PlanFood.Mvc.Models.Db
 		[MaxLength]
 		public string Description { get; set; }
 
-		[Required]
 		public DateTime Created { get; set; }
 		
-		public DateTime Updated { get; set; }
+		public DateTime? Updated { get; set; }
 
 		[Required]
 		public int PreparationTime { get; set; }
 
 		[Required, MaxLength]
 		public string Preparation { get; set; }
+		public int? UserID { get; set; }
 		public User User { get; set; }
 
 	}

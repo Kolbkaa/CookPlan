@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using PlanFood.Mvc.Context;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Services.Interfaces;
@@ -18,36 +19,36 @@ namespace PlanFood.Mvc.Services
             _context = context;
         }
 
-        public bool Create(Recipe recipe)
+        public async Task<bool> Create(Recipe recipe)
         {
-            _context.Recipes.Add(recipe);
-            return _context.SaveChanges() > 0;
+             await _context.Recipes.AddAsync(recipe);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public Recipe Get(int id)
+        public async Task<Recipe> Get(int id)
         {
-            return _context.Recipes.SingleOrDefault(b => b.Id == id);
+            return await _context.Recipes.SingleOrDefaultAsync(b => b.Id == id);
         }
 
-        public IList<Recipe> GetAll()
+        public async Task <IList<Recipe>> GetAll()
         {
-            return _context.Recipes.ToList();
+            return await _context.Recipes.ToListAsync();
         }
 
-        public bool Update(Recipe recipe)
+        public async Task<bool> Update(Recipe recipe)
         {
             _context.Recipes.Update(recipe);
-            return _context.SaveChanges() > 0;
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var recipe = _context.Recipes.SingleOrDefault(b => b.Id == id);
+            var recipe = await _context.Recipes.SingleOrDefaultAsync(b => b.Id == id);
             if (recipe == null)
                 return false;
 
             _context.Recipes.Remove(recipe);
-            return _context.SaveChanges() > 0;
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
