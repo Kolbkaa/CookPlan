@@ -19,29 +19,29 @@ namespace PlanFood.Mvc.Services
             _context = context;
         }
 
-        public async Task<bool> Create(Recipe recipe)
+        public async Task<bool> CreateAsync(Recipe recipe)
         {
              await _context.Recipes.AddAsync(recipe);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Recipe> Get(int id)
+        public async Task<Recipe> GetAsync(int id)
         {
             return await _context.Recipes.SingleOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task <IList<Recipe>> GetAll()
+        public async Task <IList<Recipe>> GetAllAsync()
         {
             return await _context.Recipes.ToListAsync();
         }
 
-        public async Task<bool> Update(Recipe recipe)
+        public async Task<bool> UpdateAsync(Recipe recipe)
         {
             _context.Recipes.Update(recipe);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var recipe = await _context.Recipes.SingleOrDefaultAsync(b => b.Id == id);
             if (recipe == null)

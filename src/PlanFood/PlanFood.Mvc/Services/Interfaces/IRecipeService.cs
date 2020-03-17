@@ -8,10 +8,10 @@ namespace PlanFood.Mvc.Services.Interfaces
 {
     public interface IRecipeService
     {
-        Task<bool> Create(Recipe recipe);
-        Task<Recipe> Get(int id);
-        Task<IList<Recipe>> GetAll();
-        Task<bool> Update(Recipe recipe);
-        Task<bool> Delete(int id);
+        Task<bool> CreateAsync(Recipe recipe);
+        Task<Recipe> GetAsync(int id);
+        Task<IList<Recipe>> GetAllAsync();
+        Task<bool> UpdateAsync(Recipe recipe);
+        Task<bool> DeleteAsync(int id);
     }
 }
