@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using PlanFood.Mvc.Context;
+using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Services;
 using PlanFood.Mvc.Services.Interfaces;
 
@@ -10,11 +14,18 @@ namespace PlanFood.Mvc
 {
 	public class Startup
 	{
-		// This method gets called by the runtime. Use this method to add services to the container.
-		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+		public IConfiguration Configuration { get; }
+
+        public Startup()
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.AddJsonFile("appsettings.json").AddEnvironmentVariables("FOODAPP_");
+            Configuration = configurationBuilder.Build();
+        }
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<PlanFoodContext>(builer => builer.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=PlanFood;Integrated Security=True"));
+			services.AddDbContext<PlanFoodContext>(builder => builder.UseSqlServer(Configuration.GetConnectionString("SQL")));
+            services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<PlanFoodContext>();
 
 			services.AddScoped<IBookService, BookService>();
 			services.AddScoped<IRecipeService, RecipeService>();
@@ -23,7 +34,7 @@ namespace PlanFood.Mvc
         }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
@@ -37,8 +48,9 @@ namespace PlanFood.Mvc
 
 			app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseRouting();
-
+            app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{

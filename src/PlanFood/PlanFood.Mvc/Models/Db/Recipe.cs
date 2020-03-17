@@ -29,8 +29,7 @@ namespace PlanFood.Mvc.Models.Db
 
 		[Required, MaxLength]
 		public string Preparation { get; set; }
-
-		//public User User { get; set; }
+		public User User { get; set; }
 
 	}
 }
