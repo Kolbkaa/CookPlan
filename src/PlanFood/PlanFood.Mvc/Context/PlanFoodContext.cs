@@ -12,5 +12,6 @@ namespace PlanFood.Mvc.Context
 		}
 
 		public DbSet<Book> Books { get; set; }
+		public DbSet<RecipePlans> RecipePlans { get; set; }
 	}
 }
