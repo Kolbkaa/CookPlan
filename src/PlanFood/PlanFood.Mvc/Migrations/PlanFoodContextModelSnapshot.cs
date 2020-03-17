@@ -176,7 +176,9 @@ namespace PlanFood.Mvc.Migrations
                     b.ToTable("Books");
                 });
 
+
             modelBuilder.Entity("PlanFood.Mvc.Models.Db.Recipe", b =>
+
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -341,6 +343,19 @@ namespace PlanFood.Mvc.Migrations
                     b.HasOne("PlanFood.Mvc.Models.Db.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(45)")
+                        .HasMaxLength(45);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DayNames");
+
                 });
 #pragma warning restore 612, 618
         }
