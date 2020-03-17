@@ -6,13 +6,13 @@
         <ul class="nav nounderline text-uppercase">
             @await Html.PartialAsync("_AccountNavPartialView")
             <li class="nav-item ml-4">
-                <a class="nav-link" href="#about">o aplikacji</a>
+                <a class="nav-link" asp-action="Info">o aplikacji</a>
             </li>
             <li class="nav-item ml-4">
                 <a class="nav-link disabled" href="recipes.html">Przepisy</a>
             </li>
             <li class="nav-item ml-4">
-                <a class="nav-link disabled" href="#contact">Kontakt</a>
+                <a class="nav-link disabled" asp-action="Contact">Kontakt</a>
             </li>
         </ul>
     </nav>
