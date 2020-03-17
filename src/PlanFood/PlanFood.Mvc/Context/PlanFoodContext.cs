@@ -13,8 +13,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 		}
 
 		public DbSet<Book> Books { get; set; }
-        public DbSet<RecipePlans> RecipePlans { get; set; }
-        public DbSet<DayName> DayNames { get; set; }
+		public DbSet<Recipe> Recipes { get; set; }
+    public DbSet<RecipePlans> RecipePlans { get; set; }
+    public DbSet<DayName> DayNames { get; set; }
 
 	}
 }

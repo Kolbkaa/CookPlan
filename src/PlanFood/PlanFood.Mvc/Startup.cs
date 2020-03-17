@@ -28,6 +28,7 @@ namespace PlanFood.Mvc
             services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<PlanFoodContext>();
 
 			services.AddScoped<IBookService, BookService>();
+			services.AddScoped<IRecipeService, RecipeService>();
 			services.AddScoped<IDayNameService,DayNameService>();
 
             services.AddControllersWithViews();

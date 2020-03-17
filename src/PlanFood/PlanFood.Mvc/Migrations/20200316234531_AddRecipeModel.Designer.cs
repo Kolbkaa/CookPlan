@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlanFood.Mvc.Context;
 
 namespace PlanFood.Mvc.Migrations
 {
     [DbContext(typeof(PlanFoodContext))]
-    partial class PlanFoodContextModelSnapshot : ModelSnapshot
+    [Migration("20200316234531_AddRecipeModel")]
+    partial class AddRecipeModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,9 +178,7 @@ namespace PlanFood.Mvc.Migrations
                     b.ToTable("Books");
                 });
 
-
             modelBuilder.Entity("PlanFood.Mvc.Models.Db.Recipe", b =>
-
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -343,19 +343,6 @@ namespace PlanFood.Mvc.Migrations
                     b.HasOne("PlanFood.Mvc.Models.Db.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(45)")
-                        .HasMaxLength(45);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DayNames");
-
                 });
 #pragma warning restore 612, 618
         }
