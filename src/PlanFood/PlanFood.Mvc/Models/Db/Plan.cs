@@ -19,5 +19,6 @@ namespace PlanFood.Mvc.Models.Db
         [Required, StringLength(450)]
         public int? UserId { get; set; }
         public User User { get; set; }
+        public ICollection<RecipePlans> RecipePlans { get; set; }
     }
 }
