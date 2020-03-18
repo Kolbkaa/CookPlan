@@ -28,6 +28,7 @@ namespace PlanFood.Mvc.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            ViewBag.Error = false;
             return View();
         }
 
@@ -47,13 +48,14 @@ namespace PlanFood.Mvc.Controllers
                 if (result.Succeeded)
                 {
                     // await SignInManager.SignInAsync(user, false);
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Index"); //         <-------------zmienic na Login po implementacji akcji Login
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
             }
+            ViewBag.Error = true;
             return View(registerViewModel);
         }
     }

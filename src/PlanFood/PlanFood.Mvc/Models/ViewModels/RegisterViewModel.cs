@@ -17,7 +17,7 @@ namespace PlanFood.Mvc.Models.ViewModels
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        //[Required, Compare("Password")]
+        [Required, Compare("Password")]
         public string ReapeatPassword { get; set; }
     }
 }

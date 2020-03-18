@@ -6,30 +6,33 @@
 }
 
 
-
+@await Html.PartialAsync("_ValidationScriptsPartialView")
 <section class="dashboard-section">
     <div class="container pt-4 pb-4">
         <div class="border-dashed view-height">
             <div class="container w-25">
-                 @*fix action, method 
-                 add name attribute for all inputs*@ 
+                @*fix action, method
+                    add name attribute for all inputs*@
                 <form class="padding-small text-center" asp-action="Register" asp-controller="Account" method="post">
-                    @Html.ValidationSummary(false, "Bledy modelu")
+                   @if (ViewBag.Error)
+                   {
+                       @Html.ValidationSummary(false, "Bledy modelu");
+                   }
                     <h1 class="text-color-darker">Rejestracja</h1>
                     <div class="form-group">
-                        <input asp-for="Name" type="text" class="form-control" id="name" name="name" placeholder="podaj imię">
+                        <input asp-for="Name" type="text" class="form-control" placeholder="podaj imię">
                     </div>
                     <div class="form-group">
-                        <input asp-for="Surname" type="text" class="form-control" id="surname" name="surname" placeholder="podaj nazwisko">
+                        <input asp-for="Surname" type="text" class="form-control" placeholder="podaj nazwisko">
                     </div>
                     <div class="form-group">
-                        <input asp-for="Email" type="text" class="form-control" id="email" name="email" placeholder="podaj email">
+                        <input asp-for="Email" type="text" class="form-control" placeholder="podaj email">
                     </div>
                     <div class="form-group">
-                        <input asp-for="Password" type="password" class="form-control" id="password" name="password" placeholder="podaj hasło">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="podaj hasło">
                     </div>
                     <div class="form-group">
-                        <input asp-for="ReapeatPassword" type="password" class="form-control" id="reapeatPassword" name="reapeatPassword" placeholder="powtórz hasło">
+                        <input asp-for="ReapeatPassword" type="password" class="form-control" placeholder="powtórz hasło">
                     </div>
                     <button class="btn btn-color rounded-0" type="submit">Zarejestruj</button>
                 </form>
@@ -37,4 +40,3 @@
         </div>
     </div>
 </section>
-@await Html.PartialAsync("_ValidationScriptsPartialView")
