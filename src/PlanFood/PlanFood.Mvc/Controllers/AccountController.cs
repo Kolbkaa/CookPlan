@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models;
-using PlanFood.Mvc.Models.Db.ViewModels;
+using PlanFood.Mvc.Models.Db;
+using PlanFood.Mvc.Models.ViewModels;
 
 namespace PlanFood.Mvc.Controllers
 {
     public class AccountController : Controller
     {
-        protected UserManager<IdentityUser> UserManager { get; }
-        protected SignInManager<IdentityUser> SignInManager { get; }
+        protected UserManager<User> UserManager { get; }
+        protected SignInManager<User> SignInManager { get; }
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             UserManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             SignInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
@@ -31,20 +32,21 @@ namespace PlanFood.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register([FromForm]RegisterViewModel registerViewModel)
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
-                { 
-                    UserName = registerViewModel.Email,                  
-                    
-                    Email = registerViewModel.Email
+                var user = new User
+                {
+                    Name = registerViewModel.Name,
+                    UserName = registerViewModel.Email,
+                    Surname = registerViewModel.Surname,
+                    Email = registerViewModel.Email,
                 };
                 var result = await UserManager.CreateAsync(user, registerViewModel.Password);
                 if (result.Succeeded)
                 {
-                   // await SignInManager.SignInAsync(user, false);
+                    // await SignInManager.SignInAsync(user, false);
                     return RedirectToAction("Login");
                 }
                 foreach (var error in result.Errors)
