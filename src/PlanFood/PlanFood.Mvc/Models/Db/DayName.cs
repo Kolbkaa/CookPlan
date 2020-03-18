@@ -13,5 +13,6 @@ namespace PlanFood.Mvc.Models.Db
         public int DisplayOrder { get; set; }
         [Required, StringLength(45)]
         public string Name { get; set; }
+        public ICollection<RecipePlans> RecipePlans {get; set;}
     }
 }
