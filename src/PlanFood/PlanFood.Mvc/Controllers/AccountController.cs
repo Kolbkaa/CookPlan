@@ -47,7 +47,7 @@ namespace PlanFood.Mvc.Controllers
                 var result = await UserManager.CreateAsync(user, registerViewModel.Password);
                 if (result.Succeeded)
                 {
-                    // await SignInManager.SignInAsync(user, false);
+                    await UserManager.AddToRoleAsync(user, "User");
                     return RedirectToAction("Index", "Home"); //         <-------------zmienic na Login po implementacji akcji Login
                 }
                 foreach (var error in result.Errors)
