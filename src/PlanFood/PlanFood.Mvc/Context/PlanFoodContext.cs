@@ -8,14 +8,16 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 {
 	public class PlanFoodContext : IdentityDbContext<User,IdentityRole<int>,int>
 	{
-		public PlanFoodContext(DbContextOptions<PlanFoodContext> options) : base(options)
-		{
-		}
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
-			builder.Entity<IdentityRole<int>>().HasData(new IdentityRole<int> { Id = 1, Name = "User", NormalizedName = "USER" });
+			builder.Entity<IdentityRole<int>>().HasData(
+				new IdentityRole<int> { Id = 1, Name = "Admin", NormalizedName = "Admin" },
+				new IdentityRole<int> { Id = 2, Name = "User", NormalizedName = "USER" });
 		}
+		public PlanFoodContext(DbContextOptions<PlanFoodContext> options) : base(options)
+		{
+		}		
 
 		public DbSet<Book> Books { get; set; }
 		public DbSet<Recipe> Recipes { get; set; }
