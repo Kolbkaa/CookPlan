@@ -52,5 +52,11 @@ namespace PlanFood.Mvc.Services
         {
             return await _context.Plans.Where(plan => plan.User.Equals(user)).CountAsync();
         }
+
+        public async Task<Plan> GetLastAddPlan(User user)
+        {
+            return await _context.Plans.Include(plan => plan.RecipePlans).ThenInclude(recipePlans => recipePlans.DayName)
+                .Where(plan => plan.User.Equals(user)).OrderByDescending(plan => plan.Created).FirstOrDefaultAsync();
+        }
     }
 }
