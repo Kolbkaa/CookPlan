@@ -34,6 +34,7 @@ namespace PlanFood.Mvc
 			services.AddScoped<IBookService, BookService>();
 			services.AddScoped<IRecipeService, RecipeService>();
 			services.AddScoped<IDayNameService,DayNameService>();
+			services.AddScoped<IPlanService,PlanService>();
 
             services.AddControllersWithViews();
         }
