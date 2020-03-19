@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,9 +19,9 @@ namespace PlanFood.Mvc.Models.Db
 
 		[MaxLength]
 		public string Description { get; set; }
-
+		[Column(TypeName = "datetime2(7)")]
 		public DateTime Created { get; set; }
-		
+		[Column(TypeName = "datetime2(7)")]
 		public DateTime? Updated { get; set; }
 
 		[Required]
@@ -31,6 +32,6 @@ namespace PlanFood.Mvc.Models.Db
 		public int? UserID { get; set; }
 		public User User { get; set; }
 
-		//public ICollection<RecipePlans> RecipePlans { get; set; }
+		public ICollection<RecipePlans> RecipePlans { get; set; }
 	}
 }
