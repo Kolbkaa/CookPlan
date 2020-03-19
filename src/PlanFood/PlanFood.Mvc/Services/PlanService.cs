@@ -47,6 +47,7 @@ namespace PlanFood.Mvc.Services
             _context.Plans.Remove(plan);
             return await _context.SaveChangesAsync() > 0;
         }
+
         public async Task<int> CountUserPlan(User user)
         {
             return await _context.Plans.Where(plan => plan.User.Equals(user)).CountAsync();
