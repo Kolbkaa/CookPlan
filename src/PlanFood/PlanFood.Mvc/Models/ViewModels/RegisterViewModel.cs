@@ -8,16 +8,16 @@ namespace PlanFood.Mvc.Models.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Pole wymagane")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Pole wymagane")]
         public string Surname { get; set; }
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Pole wymagane")]
+        [EmailAddress(ErrorMessage = "Nie poprawna adres email")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Pole wymagane")]
         public string Password { get; set; }
-        [Required, Compare("Password")]
+        [Required(ErrorMessage = "Pole wymagane"), Compare("Password")]
         public string ReapeatPassword { get; set; }
     }
 }
