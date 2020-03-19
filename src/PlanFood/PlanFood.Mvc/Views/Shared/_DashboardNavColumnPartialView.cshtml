@@ -1,6 +1,5 @@
 ﻿<ul class="nav flex-column long-bg">
     <li class="nav-item">
-        @*@Html.ActionLink("Pulpit", "Index", "Dashboard", null, new { @class="nav-link" });*@
         <a class="nav-link" asp-action="Index" asp-controller="Dashboard">
             <span>Pulpit</span>
             <i class="fas fa-angle-right"></i>
@@ -33,6 +32,12 @@
     <li class="nav-item">
         <a class="nav-link" href="/super-admin-users.html">
             <span>Użytkownicy</span>
+            <i class="fas fa-angle-right"></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/logout.html">
+            <span>Wyloguj</span>
             <i class="fas fa-angle-right"></i>
         </a>
     </li>
