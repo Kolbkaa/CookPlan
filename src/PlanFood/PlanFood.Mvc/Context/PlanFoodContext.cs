@@ -18,7 +18,7 @@ namespace PlanFood.Mvc.Context
 				new IdentityRole<int> { Id = 1, Name = "Admin", NormalizedName = "Admin" },
 				new IdentityRole<int> { Id = 2, Name = "User", NormalizedName = "USER" });
 			builder.Entity<DayName>().HasData(
-				new DayName { Id = 1, Name = "Poniedziałek", DisplayOrder = 1},
+				new DayName { Id = 1, Name = "Poniedziałek", DisplayOrder = 1 },
 				new DayName { Id = 2, Name = "Wtorek", DisplayOrder = 2 },
 				new DayName { Id = 3, Name = "Środa", DisplayOrder = 3 },
 				new DayName { Id = 4, Name = "Czwartek", DisplayOrder = 4 },
@@ -26,7 +26,6 @@ namespace PlanFood.Mvc.Context
 				new DayName { Id = 6, Name = "Sobota", DisplayOrder = 6 },
 				new DayName { Id = 7, Name = "Niedziela", DisplayOrder = 7 }
 				);
-			base.OnModelCreating(builder);
 		}
 
 		public DbSet<Book> Books { get; set; }
