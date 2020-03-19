@@ -58,7 +58,6 @@ namespace PlanFood.Mvc.Services
             return await _context.Plans.Include(plan => plan.RecipePlans).ThenInclude(recipePlans => recipePlans.DayName)
                 .Where(plan => plan.User.Equals(user)).OrderByDescending(plan => plan.Created).FirstOrDefaultAsync();
         }
-
         public async Task<bool> AddRecipeToPlanAsync(RecipePlans recipePlans)
         {
             await _context.RecipePlans.AddAsync(recipePlans);
