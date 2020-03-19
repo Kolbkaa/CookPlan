@@ -7,16 +7,17 @@ using PlanFood.Mvc.Models.Db;
 namespace PlanFood.Mvc.Context
 {
 	public class PlanFoodContext : IdentityDbContext<User, IdentityRole<int>, int>
-	{
+	{		
+		public PlanFoodContext(DbContextOptions<PlanFoodContext> options) : base(options)
+		{
+		}
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-			base.OnModelCreating(builder);
+			
 			builder.Entity<IdentityRole<int>>().HasData(
 				new IdentityRole<int> { Id = 1, Name = "Admin", NormalizedName = "Admin" },
 				new IdentityRole<int> { Id = 2, Name = "User", NormalizedName = "USER" });
-		}
-		public PlanFoodContext(DbContextOptions<PlanFoodContext> options) : base(options)
-		{
+			base.OnModelCreating(builder);
 		}
 
 		public DbSet<Book> Books { get; set; }
