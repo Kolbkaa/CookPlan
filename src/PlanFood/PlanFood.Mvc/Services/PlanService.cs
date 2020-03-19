@@ -34,7 +34,7 @@ namespace PlanFood.Mvc.Services
         }
         public async Task<IList<Plan>> GetUserPlanAsync(User user)
         {
-            return await _context.Plans.Where(plan => plan.User.Equals(user)).ToListAsync();
+            return await _context.Plans.Where(plan => plan.User.Equals(user)).OrderByDescending(plan => plan.Created).ToListAsync();
         }
 
         public async Task<bool> UpdateAsync(Plan plan)
