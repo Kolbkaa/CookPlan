@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Models.Db
 {
-    public class Recipe
+	public class Recipe
     {
+        public Recipe()
+        {
+            Created = DateTime.Now.Date;
+        }
 		public int Id { get; set; }
 
 		[Required, StringLength(255)]
