@@ -6,7 +6,7 @@ using PlanFood.Mvc.Models.Db;
 
 namespace PlanFood.Mvc.Services.Interfaces
 {
-    interface IPlanService
+    public interface IPlanService
     {
         Task<bool> CreateAsync(Plan plan);
         Task<Plan> GetAsync(int id);
@@ -14,5 +14,6 @@ namespace PlanFood.Mvc.Services.Interfaces
         Task<bool> UpdateAsync(Plan plan);
         Task<bool> DeleteAsync(int id);
         Task<int> CountUserPlan(User user);
+        Task<Plan> GetLastAddPlan(User user);
     }
 }
