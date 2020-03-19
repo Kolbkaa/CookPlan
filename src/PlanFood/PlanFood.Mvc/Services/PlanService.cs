@@ -48,15 +48,19 @@ namespace PlanFood.Mvc.Services
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<int> CountUserPlan(User user)
+        public async Task<int> CountUserPlanAsync(User user)
         {
             return await _context.Plans.Where(plan => plan.User.Equals(user)).CountAsync();
         }
 
-        public async Task<Plan> GetLastAddPlan(User user)
+        public async Task<Plan> GetLastAddPlanAsync(User user)
         {
             return await _context.Plans.Include(plan => plan.RecipePlans).ThenInclude(recipePlans => recipePlans.DayName)
                 .Where(plan => plan.User.Equals(user)).OrderByDescending(plan => plan.Created).FirstOrDefaultAsync();
+        }
+        public async Task<int> CountUserRecipeAsync(User user)
+        {
+            return await _context.Recipes.Where(plan => plan.User.Equals(user)).CountAsync();
         }
     }
 }
