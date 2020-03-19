@@ -13,5 +13,6 @@ namespace PlanFood.Mvc.Services.Interfaces
         Task<IList<Plan>> GetAllAsync();
         Task<bool> UpdateAsync(Plan plan);
         Task<bool> DeleteAsync(int id);
+        Task<int> CountUserPlan(User user);
     }
 }
