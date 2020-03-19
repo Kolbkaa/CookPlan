@@ -26,6 +26,10 @@ namespace PlanFood.Mvc
 		{
 			services.AddDbContext<PlanFoodContext>(builder => builder.UseSqlServer(Configuration.GetConnectionString("SQL")));
             services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<PlanFoodContext>();
+			services.Configure<IdentityOptions>(options =>
+			{
+				options.User.RequireUniqueEmail = true;
+			});
 
 			services.AddScoped<IBookService, BookService>();
 			services.AddScoped<IRecipeService, RecipeService>();
