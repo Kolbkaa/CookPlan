@@ -8,7 +8,7 @@ namespace PlanFood.Mvc.Models.ViewModels
 {
     public class AddPlanViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Nazwa planu jest wymagana")]
         public string Name { get; set; }
         public string Description { get; set; }
     }
