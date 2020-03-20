@@ -14,7 +14,7 @@ namespace PlanFood.Mvc.Models.Db
         public DateTime Created { get; set; }
         [MaxLength]
         public string Description { get; set; }
-        [StringLength(45)]
+        [Required(ErrorMessage = "Pole wymagane"), StringLength(45)]
         public string Name { get; set; }
         [Required, StringLength(450)]
         public int? UserId { get; set; }
