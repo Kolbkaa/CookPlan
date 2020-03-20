@@ -19,6 +19,7 @@ namespace PlanFood.Mvc.Controllers
             _userManager = userManager;
             _recipeService = recipeService;
         }
+
         [HttpGet]
         public IActionResult Add()
         {
@@ -58,6 +59,14 @@ namespace PlanFood.Mvc.Controllers
             }
 
             return RedirectToAction("List", "Recipe");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var recipeList = await _recipeService.RecipeUserListAsync(user);
+            return View(recipeList);
         }
     }
 }
