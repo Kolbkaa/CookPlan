@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Services.Interfaces
 {
-    interface IDayNameService
+    public interface IDayNameService
     {
         Task<IList<DayName>> GetAllAsync();
     }

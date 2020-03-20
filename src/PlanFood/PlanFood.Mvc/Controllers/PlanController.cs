@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Models.ViewModels;
 using PlanFood.Mvc.Services.Interfaces;
@@ -14,11 +16,15 @@ namespace PlanFood.Mvc.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IPlanService _planService;
+        private readonly IDayNameService _dayNameService;
+        private readonly IRecipeService _recipeService;
 
-        public PlanController(UserManager<User> userManager, IPlanService planService)
+        public PlanController(UserManager<User> userManager, IPlanService planService, IDayNameService dayNameService, IRecipeService recipeService)
         {
             _userManager = userManager;
             _planService = planService;
+            _dayNameService = dayNameService;
+            _recipeService = recipeService;
         }
         public async Task<IActionResult> List()
         {
@@ -67,5 +73,44 @@ namespace PlanFood.Mvc.Controllers
 
             return RedirectToAction("List", "Plan");
         }
+        [HttpGet]
+        public async Task<IActionResult> AddRecipe()
+        {
+            var viewModel = new AddRecipeToPlanViewModel();
+            var user = await _userManager.GetUserAsync(User);
+            var plans = await _planService.GetUserPlanAsync(user);
+            var days = await _dayNameService.GetAllAsync();
+            var recipes = await _recipeService.RecipeUserListAsync(user);
+            viewModel.ChoosePlans = plans.Select(plan => new SelectListItem() { Text = plan.Name, Value = plan.Id.ToString() }).ToList();
+            viewModel.DayNames = days.Select(day => new SelectListItem() { Text = day.Name, Value = day.Id.ToString() }).ToList();
+            viewModel.Recipes = recipes.Select(recipe => new SelectListItem() { Text = recipe.Name, Value = recipe.Id.ToString() }).ToList();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRecipe(AddRecipeToPlanViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var recipePlan = new RecipePlans
+            {
+                DisplayOrder = model.DisplayOrder,
+                MealName = model.MealName,
+                PlanId = int.Parse(model.ChoosePlan),
+                DayNameId = int.Parse(model.DayName),
+                RecipeId = int.Parse(model.Recipe)
+            };
+
+            var result = await _planService.AddRecipeToPlanAsync(recipePlan);
+
+            if (result == false)
+            {
+                ModelState.AddModelError("", "Błąd dodawania planu");
+                return View(model);
+            }
+
+            return RedirectToAction("AddRecipe", "Plan");
+        }
+
     }
 }
