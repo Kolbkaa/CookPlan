@@ -31,9 +31,9 @@ namespace PlanFood.Mvc.Controllers
             var user = await UserManager.GetUserAsync(User);
             var dasboardViewModel = new DashboardViewModel()
             {
-                RecipeNumber = await _recipeService.CountRecipes(user),
-                Plan = await _planService.GetLastAddPlan(user),
-                PlanNumber = await _planService.CountUserPlan(user)
+                RecipeNumber = await _recipeService.CountRecipesAsync(user),
+                Plan = await _planService.GetLastAddPlanAsync(user),
+                PlanNumber = await _planService.CountUserPlanAsync(user)
             };
             return View(dasboardViewModel);
         }

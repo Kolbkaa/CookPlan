@@ -32,6 +32,10 @@ namespace PlanFood.Mvc.Services
         {
             return await _context.Plans.ToListAsync();
         }
+        public async Task<IList<Plan>> GetUserPlanAsync(User user)
+        {
+            return await _context.Plans.Where(plan => plan.User.Equals(user)).OrderByDescending(plan => plan.Created).ToListAsync();
+        }
 
         public async Task<bool> UpdateAsync(Plan plan)
         {
@@ -48,15 +52,29 @@ namespace PlanFood.Mvc.Services
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<int> CountUserPlan(User user)
+        public async Task<int> CountUserPlanAsync(User user)
         {
             return await _context.Plans.Where(plan => plan.User.Equals(user)).CountAsync();
         }
 
-        public async Task<Plan> GetLastAddPlan(User user)
+        public async Task<Plan> GetLastAddPlanAsync(User user)
         {
             return await _context.Plans.Include(plan => plan.RecipePlans).ThenInclude(recipePlans => recipePlans.DayName)
                 .Where(plan => plan.User.Equals(user)).OrderByDescending(plan => plan.Created).FirstOrDefaultAsync();
+        }
+        public async Task<bool> AddRecipeToPlanAsync(RecipePlans recipePlans)
+        {
+            await _context.RecipePlans.AddAsync(recipePlans);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> RemoveRecipeToPlanAsync(int id)
+        {
+            var recipePlan = await _context.RecipePlans.SingleOrDefaultAsync(x => x.ID == id);
+            if (recipePlan == null) return false;
+
+            _context.RecipePlans.Remove(recipePlan);
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
