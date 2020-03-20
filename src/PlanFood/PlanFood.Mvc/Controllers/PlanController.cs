@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Models.ViewModels;
 using PlanFood.Mvc.Services.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Controllers
 {
@@ -14,11 +14,13 @@ namespace PlanFood.Mvc.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IPlanService _planService;
+        private readonly IDayNameService _dayNameService;
 
-        public PlanController(UserManager<User> userManager, IPlanService planService)
+        public PlanController(UserManager<User> userManager, IPlanService planService, IDayNameService dayNameService)
         {
             _userManager = userManager;
             _planService = planService;
+            _dayNameService = dayNameService;
         }
         public async Task<IActionResult> List()
         {
@@ -66,6 +68,18 @@ namespace PlanFood.Mvc.Controllers
             }
 
             return RedirectToAction("List", "Plan");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+
+            var viewModel = new PlanDetailsViewModel()
+            {
+                Plan = await _planService.GetWithDetailsAsync(id),
+                DayNames = await _dayNameService.GetAllAsync()
+            };
+            return View(viewModel);
         }
     }
 }
