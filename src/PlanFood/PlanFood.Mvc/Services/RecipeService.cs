@@ -50,9 +50,15 @@ namespace PlanFood.Mvc.Services
             _context.Recipes.Remove(recipe);
             return await _context.SaveChangesAsync() > 0;
         }
-        public async Task<int> CountUserRecipeAsync(User user)
+
+        public async Task<int> CountRecipesAsync(User user)
         {
-            return await _context.Recipes.Where(plan => plan.User.Equals(user)).CountAsync();
+            return await _context.Recipes.Where(recipe => recipe.User.Equals(user)).CountAsync();
+        }
+
+        public async Task<IList<Recipe>> RecipeUserListAsync(User user)
+        {      
+            return await _context.Recipes.Where(recipe => recipe.User.Equals(user)).OrderByDescending(recipe => recipe.Created).ToListAsync();
         }
     }
 }
