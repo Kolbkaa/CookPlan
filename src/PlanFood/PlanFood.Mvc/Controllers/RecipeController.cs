@@ -68,5 +68,12 @@ namespace PlanFood.Mvc.Controllers
             var recipeList = await _recipeService.RecipeUserListAsync(user);
             return View(recipeList);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var recipe = await _recipeService.GetAsync(id);
+            return View(recipe);
+        }
     }
 }
