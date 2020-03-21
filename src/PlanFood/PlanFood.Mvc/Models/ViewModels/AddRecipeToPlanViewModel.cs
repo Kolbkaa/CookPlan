@@ -6,13 +6,14 @@ namespace PlanFood.Mvc.Models.ViewModels
 {
     public class AddRecipeToPlanViewModel
     {
-        [Required(ErrorMessage = "Pole wymagane")]
+        [Required(ErrorMessage = "Pole wymagane!")]
         public string ChoosePlan { get; set; }
         public IList<SelectListItem> ChoosePlans { get; set; }
-        [Required, StringLength(245)]
+        [Required(ErrorMessage = "Pole wymagane!"), StringLength(245)]
         public string MealName { get; set; }
+        [Required(ErrorMessage ="Pole wymagane!")]
         public int DisplayOrder { get; set; }
-        [Required(ErrorMessage = "Pole wymagane")]
+        [Required(ErrorMessage = "Pole wymagane!")]
         public string Recipe { get; set; }
         public IList<SelectListItem> Recipes { get; set; }
         [Required(ErrorMessage = "Pole wymagane")]
