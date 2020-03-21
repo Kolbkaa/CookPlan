@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +6,7 @@ using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Models.ViewModels;
 using PlanFood.Mvc.Services.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Controllers
@@ -123,6 +121,53 @@ namespace PlanFood.Mvc.Controllers
             }
 
             return RedirectToAction("AddRecipe", "Plan");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var planToEdit = await _planService.GetAsync(id);
+            var viewModel = new EditPlanViewModel()
+            {
+                Id = planToEdit.Id,
+                Description = planToEdit.Description,
+                Name = planToEdit.Name,
+                Created = planToEdit.Created
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditPlanViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Błąd edycji planu");
+                return View(model);
+            }
+
+            var plan = new Plan()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Description = model.Description,
+                Created = model.Created,
+                User = user
+            };
+
+            var result = await _planService.UpdateAsync(plan);
+
+            if (result == false)
+            {
+                ModelState.AddModelError("", "Błąd edycji planu");
+                return View(model);
+            }
+
+            return RedirectToAction("List", "Plan");
         }
     }
 }
