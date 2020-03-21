@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Models.ViewModels
 {
-    public class EditRecipeViewModel:AddRecipeViewModel
+    public class EditPlanViewModel:AddPlanViewModel
     {
         public int Id { get; set; }
         public DateTime Created { get; set; }
+
     }
 }

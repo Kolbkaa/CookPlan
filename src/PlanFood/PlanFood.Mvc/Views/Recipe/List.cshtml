@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Lista receptur";
 }
-
    
         <div class="m-4 p-3 width-medium">
             <div class="dashboard-content border-dashed p-3 m-4 view-height">
@@ -25,9 +24,16 @@
                         <tr class="d-flex">
                             <th scope="row" class="col-1">@recipe.Id</th>
                             <td class="col-2">@recipe.Name</td>
-                            <td class="col-7">@recipe.Description</td>
+                            <td class="col-7">@recipe.Description</td>                            
                             <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
-                                <a asp-action="Delete" asp-controller="Recipe" asp-route-id="@recipe.Id" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
+                                @if (@recipe.RecipePlans.Count == 0)
+                                {
+                                    <a asp-action="Remove" asp-controller="Recipe" asp-route-id="@recipe.Id" class="btn btn-danger rounded-0 text-light m-1" onclick="return confirm('Czy chcesz usunąć recepturę?')">Usuń</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-danger rounded-0 text-light m-1" onclick="return alert('Nie można usunąc receptury, która należy do planu')">Usuń</a>
+                                }
                                 <a asp-action="Details" asp-controller="Recipe" asp-route-id="@recipe.Id" class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
                                 <a asp-action="Edit" asp-controller="Recipe" asp-route-id="@recipe.Id" class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                             </td>
@@ -38,3 +44,4 @@
             </div>
         </div>
 
+        
