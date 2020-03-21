@@ -88,7 +88,6 @@ namespace PlanFood.Mvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-<<<<<<< Updated upstream
         [HttpGet]
         public async Task<IActionResult> Edit()
         {
@@ -109,6 +108,7 @@ namespace PlanFood.Mvc.Controllers
             if (!ModelState.IsValid) return View(editUserViewModel);
 
             var user = await UserManager.GetUserAsync(User);
+            if (user == null) return View("Login");
             user.Name = editUserViewModel.Name;
             user.Surname = editUserViewModel.Surname;
             user.Email = editUserViewModel.Email;
@@ -119,44 +119,10 @@ namespace PlanFood.Mvc.Controllers
             }
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error.Description);
+                ModelState.AddModelError(string.Empty, error.Description);
             }
             return View(editUserViewModel);
-=======
-        [Authorize]
-        [HttpGet]
-        public IActionResult EditUserPass()
-        {
-            return View();
         }
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> EditUserPass(EditUserPassViewModel editUserPassViewModel)
-        {
-            if (!ModelState.IsValid) return View();
-            
-            var user = await UserManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return RedirectToAction("Login");
-            }
-            
-            //var token = await UserManager.GeneratePasswordResetTokenAsync(user);
-            //var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);
-            await UserManager.RemovePasswordAsync(user);
-            await UserManager.AddPasswordAsync(user, editUserPassViewModel.Password.GetHashCode);
-            return RedirectToAction("Index", "Dashboard");
-            //if (result.Succeeded)
-            //{
-            //    return RedirectToAction("Index", "Dashboard");
-            //}
-            //foreach (var error in result.Errors)
-            //{
-            //    ModelState.AddModelError(string.Empty, error.Description);
-            //}
-            //return View();
->>>>>>> Stashed changes
-        }
     }
 }
