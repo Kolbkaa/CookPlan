@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models.Db;
@@ -87,7 +88,9 @@ namespace PlanFood.Mvc.Controllers
                 Name = recipeToEdit.Name,
                 Ingredients = recipeToEdit.Ingredients,
                 Preparation = recipeToEdit.Preparation,
-                PreparationTime = recipeToEdit.PreparationTime
+                PreparationTime = recipeToEdit.PreparationTime,
+                Created = recipeToEdit.Created,
+                
             };
             return View(viewModel);
         }
@@ -113,6 +116,8 @@ namespace PlanFood.Mvc.Controllers
                 PreparationTime = model.PreparationTime,
                 Ingredients = model.Ingredients,
                 Description = model.Description,
+                Created = model.Created,
+                Updated = DateTime.Now,
                 User = user
 
             };
