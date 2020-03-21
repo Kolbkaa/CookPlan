@@ -1,14 +1,12 @@
-﻿@model AddPlanViewModel
+﻿@model EditPlanViewModel
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Edycja planu";
 }
-
-
 <div class="m-4 p-3 width-medium">
     <div class="dashboard-content border-dashed p-3 m-4 view-height">
-        <!-- fix action, method -->
-        <!-- add name attribute for all inputs -->
-        <form asp-action="Add">
+        <form asp-action="Edit">
+            <input asp-for="Id" hidden/>
+            <input asp-for="Created" hidden/>
             <div class="row border-bottom border-3 p-1 m-1">
                 <div class="col noPadding">
                     <h3 class="color-header text-uppercase">NOWY PLAN</h3>
