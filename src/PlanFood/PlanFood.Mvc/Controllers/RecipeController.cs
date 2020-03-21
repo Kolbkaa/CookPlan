@@ -77,6 +77,13 @@ namespace PlanFood.Mvc.Controllers
             return View(recipe);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Remove(int id)
+        {
+            await _recipeService.DeleteAsync(id);
+            return RedirectToAction("List");
+        }       
+
         public async Task<IActionResult> Edit(int id)
         {
             var recipeToEdit = await _recipeService.GetAsync(id);
