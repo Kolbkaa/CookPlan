@@ -24,9 +24,22 @@
                         <tr class="d-flex">
                             <th scope="row" class="col-1">@recipe.Id</th>
                             <td class="col-2">@recipe.Name</td>
-                            <td class="col-7">@recipe.Description</td>
-                            <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">                               
-                                <a asp-action="Remove" asp-controller="Recipe" asp-route-id="@recipe.Id" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
+                            <td class="col-7">@recipe.Description</td>                            
+                            <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
+                                @if (@recipe.RecipePlans.Count == 0)
+                                {
+                                    <form asp-action="Remove" asp-controller="Recipe" asp-route-id="@recipe.Id" method="get">
+                                        <button type="submit" class="btn btn-danger rounded-0 text-light m-1" onclick="return confirm('Czy chcesz usunąć recepturę?')">Usuń</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form>
+                                        <button type="submit" class="btn btn-danger rounded-0 text-light m-1" onclick="return alert('Nie można usunąc receptury, która należy do planu')">Usuń</button>
+                                    </form>
+                                }
+
+                                @*<a asp-action="Remove" asp-controller="Recipe" asp-route-id="@recipe.Id" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>*@
                                 <a asp-action="Details" asp-controller="Recipe" asp-route-id="@recipe.Id" class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
                                 <a asp-action="Edit" asp-controller="Recipe" asp-route-id="@recipe.Id" class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                             </td>

@@ -80,10 +80,8 @@ namespace PlanFood.Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
-            var count = await _recipeService.CountRecipePlans(id);
-                 
-                //await _recipeService.DeleteAsync(id);
-                return RedirectToAction("ConfirmRemove");
+            //var count = await _recipeService.CountRecipePlans(id);
+            return await ConfirmRemove(id);
         }
         [HttpPost]
         public async Task<IActionResult> ConfirmRemove(int recipe)

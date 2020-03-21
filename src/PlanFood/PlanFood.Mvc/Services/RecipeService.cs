@@ -57,7 +57,7 @@ namespace PlanFood.Mvc.Services
 
         public async Task<IList<Recipe>> RecipeUserListAsync(User user)
         {      
-            return await _context.Recipes.Where(recipe => recipe.User.Equals(user)).OrderByDescending(recipe => recipe.Created).ToListAsync();
+            return await _context.Recipes.Include(recipePlan => recipePlan.RecipePlans).Where(recipe => recipe.User.Equals(user)).OrderByDescending(recipe => recipe.Created).ToListAsync();
         }
 
         public async Task<int> CountRecipePlans (int id)
