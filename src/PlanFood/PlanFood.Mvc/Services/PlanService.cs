@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PlanFood.Mvc.Context;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Services.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Services
 {
@@ -26,6 +25,13 @@ namespace PlanFood.Mvc.Services
         public async Task<Plan> GetAsync(int id)
         {
             return await _context.Plans.SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Plan> GetWithDetailsAsync(int id)
+        {
+            return await _context.Plans.Include(plan => plan.RecipePlans).ThenInclude(recipePlan => recipePlan.DayName)
+                .ThenInclude(plan => plan.RecipePlans).ThenInclude(recipePlan => recipePlan.Recipe)
+                .SingleOrDefaultAsync(plan => plan.Id == id);
         }
 
         public async Task<IList<Plan>> GetAllAsync()

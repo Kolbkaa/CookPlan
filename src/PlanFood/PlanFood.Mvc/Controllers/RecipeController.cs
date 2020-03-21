@@ -76,6 +76,7 @@ namespace PlanFood.Mvc.Controllers
             return View(recipe);
         }
 
+
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
@@ -87,8 +88,60 @@ namespace PlanFood.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmRemove(int recipe)
         {
-                await _recipeService.DeleteAsync(recipe);
-                return RedirectToAction("List");
+            await _recipeService.DeleteAsync(recipe);
+            return RedirectToAction("List");
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var recipeToEdit = await _recipeService.GetAsync(id);
+
+            var viewModel = new EditRecipeViewModel()
+            {
+                Id = recipeToEdit.Id,
+                Description = recipeToEdit.Description,
+                Name = recipeToEdit.Name,
+                Ingredients = recipeToEdit.Ingredients,
+                Preparation = recipeToEdit.Preparation,
+                PreparationTime = recipeToEdit.PreparationTime
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditRecipeViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Błąd edycji przepisu.");
+                return View(model);
+            }
+
+            var recipe = new Recipe()
+            {
+                Id = model.Id,
+                Preparation = model.Preparation,
+                Name = model.Name,
+                PreparationTime = model.PreparationTime,
+                Ingredients = model.Ingredients,
+                Description = model.Description,
+                User = user
+
+            };
+
+            var result = await _recipeService.UpdateAsync(recipe);
+
+            if (result == false)
+            {
+                ModelState.AddModelError("", "Błąd edycji przepisu.");
+                return View(model);
+            }
+
+            return RedirectToAction("List", "Recipe");
         }
     }
 }

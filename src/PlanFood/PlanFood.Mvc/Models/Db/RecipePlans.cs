@@ -12,5 +12,6 @@ namespace PlanFood.Mvc.Models.Db
         public string MealName { get; set; }
         public int PlanId { get; set; }
         public int RecipeId { get; set; }
+        public Recipe Recipe { get; set; }
     }
 }
