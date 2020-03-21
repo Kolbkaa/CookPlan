@@ -25,7 +25,7 @@ namespace PlanFood.Mvc
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<PlanFoodContext>(builder => builder.UseSqlServer(Configuration.GetConnectionString("SQL")));
-            services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<PlanFoodContext>();
+			services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<PlanFoodContext>().AddDefaultTokenProviders();
 			services.Configure<IdentityOptions>(options =>
 			{
 				options.User.RequireUniqueEmail = true;

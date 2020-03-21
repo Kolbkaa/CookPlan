@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models;
@@ -84,6 +85,37 @@ namespace PlanFood.Mvc.Controllers
         {
             await SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult EditUserPass()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditUserPass(EditUserPassViewModel editUserPassViewModel)
+        {
+            if (!ModelState.IsValid) return View();
+
+            var user = await UserManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var token = await UserManager.GeneratePasswordResetTokenAsync(user);
+            var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);         
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View();
         }
     }
 }
