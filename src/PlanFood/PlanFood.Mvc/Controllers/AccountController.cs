@@ -106,10 +106,7 @@ namespace PlanFood.Mvc.Controllers
             }
 
             var token = await UserManager.GeneratePasswordResetTokenAsync(user);
-            var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);
-            //await UserManager.RemovePasswordAsync(user);
-            //await UserManager.AddPasswordAsync(user, editUserPassViewModel.Password.GetHashCode);
-            //return RedirectToAction("Index", "Dashboard");
+            var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);         
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Dashboard");
