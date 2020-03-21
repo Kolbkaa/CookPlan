@@ -17,12 +17,14 @@ namespace PlanFood.Mvc.Controllers
     {
         private readonly IRecipeService _recipeService;
         private readonly IPlanService _planService;
-        protected UserManager<User> UserManager { get; }
+        private readonly IDayNameService _dayNameService;
+        private readonly UserManager<User> UserManager;
 
-        public DashboardController(IRecipeService recipeService, IPlanService planService, UserManager<User> userManager)
+        public DashboardController(IRecipeService recipeService, IPlanService planService, IDayNameService dayNameService, UserManager<User> userManager)
         {
             _recipeService = recipeService;
             _planService = planService;
+            _dayNameService = dayNameService;
             UserManager = userManager;
         }
 
@@ -33,7 +35,8 @@ namespace PlanFood.Mvc.Controllers
             {
                 RecipeNumber = await _recipeService.CountRecipesAsync(user),
                 Plan = await _planService.GetLastAddPlanAsync(user),
-                PlanNumber = await _planService.CountUserPlanAsync(user)
+                PlanNumber = await _planService.CountUserPlanAsync(user),
+                DayNames = await _dayNameService.GetAllAsync()                
             };
             return View(dasboardViewModel);
         }

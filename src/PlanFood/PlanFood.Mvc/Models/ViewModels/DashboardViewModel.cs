@@ -11,6 +11,6 @@ namespace PlanFood.Mvc.Models.ViewModels
         public int RecipeNumber { get; set; }
         public int PlanNumber { get; set; }
         public Plan Plan { get; set; }
-
+        public IList<DayName> DayNames { get; set; }
     }
 }

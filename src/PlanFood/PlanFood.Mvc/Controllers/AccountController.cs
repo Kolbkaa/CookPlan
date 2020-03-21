@@ -44,7 +44,7 @@ namespace PlanFood.Mvc.Controllers
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user, "User");
-                    return RedirectToAction("Index", "Home"); //         <-------------zmienic na Login po implementacji akcji Login
+                    return RedirectToAction("Login"); 
                 }
                 foreach (var error in result.Errors)
                 {
