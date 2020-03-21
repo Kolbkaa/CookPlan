@@ -9,7 +9,7 @@ namespace PlanFood.Mvc.Models.Db
     {
         public Recipe()
         {
-            Created = DateTime.Now.Date;
+            Created = DateTime.Now;
         }
 		public int Id { get; set; }
 

@@ -32,7 +32,7 @@ namespace PlanFood.Mvc.Services
 
         public async Task <IList<Recipe>> GetAllAsync()
         {
-            return await _context.Recipes.ToListAsync();
+            return await _context.Recipes.OrderByDescending(recipe => recipe.Created).ToListAsync();
         }
 
         public async Task<bool> UpdateAsync(Recipe recipe)
