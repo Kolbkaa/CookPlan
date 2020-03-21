@@ -76,19 +76,12 @@ namespace PlanFood.Mvc.Controllers
             return View(recipe);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
-            //var count = await _recipeService.CountRecipePlans(id);
-            return await ConfirmRemove(id);
-        }
-        [HttpPost]
-        public async Task<IActionResult> ConfirmRemove(int recipe)
-        {
-            await _recipeService.DeleteAsync(recipe);
+            await _recipeService.DeleteAsync(id);
             return RedirectToAction("List");
-        }
+        }       
 
         public async Task<IActionResult> Edit(int id)
         {

@@ -59,13 +59,5 @@ namespace PlanFood.Mvc.Services
         {      
             return await _context.Recipes.Include(recipePlan => recipePlan.RecipePlans).Where(recipe => recipe.User.Equals(user)).OrderByDescending(recipe => recipe.Created).ToListAsync();
         }
-
-        public async Task<int> CountRecipePlans (int id)
-        {
-            var recipe = await _context.Recipes.Where(plan => plan.RecipePlans.Equals(id)).CountAsync();
-            var count = await _context.Recipes.SingleOrDefaultAsync(b => b.Id == id);
-            var result = count.RecipePlans.Count;
-            return recipe;
-        }
     }
 }
