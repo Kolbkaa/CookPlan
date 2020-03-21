@@ -124,5 +124,12 @@ namespace PlanFood.Mvc.Controllers
 
             return RedirectToAction("AddRecipe", "Plan");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Remove(int id)
+        {
+            await _planService.DeleteAsync(id);
+            return RedirectToAction("List");
+        }
     }
 }
