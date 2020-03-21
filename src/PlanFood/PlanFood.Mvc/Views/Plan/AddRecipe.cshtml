@@ -32,6 +32,7 @@
                                 </label>
                                 <div class="col-sm-10">
                                     <input asp-for="MealName" type="text" class="form-control" value="" placeholder="Nazwa posiłku">
+                                    <span asp-validation-for="MealName"></span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -40,6 +41,7 @@
                                 </label>
                                 <div class="col-sm-2">
                                     <input asp-for="DisplayOrder" type="text" class="form-control" value="" placeholder="Numer posiłku">
+                                    <span asp-validation-for="DisplayOrder"></span>
                                 </div>
                             </div>
                             <div class="form-group row">
