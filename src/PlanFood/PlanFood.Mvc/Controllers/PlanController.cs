@@ -169,5 +169,12 @@ namespace PlanFood.Mvc.Controllers
 
             return RedirectToAction("List", "Plan");
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> Remove(int id)
+        {
+            await _planService.DeleteAsync(id);
+            return RedirectToAction("List");
+        }
     }
 }
