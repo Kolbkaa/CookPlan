@@ -33,9 +33,13 @@ namespace PlanFood.Mvc.Services
             return await _context.Recipes.ToListAsync();
         }
 
-        public async Task<IList<Recipe>> GetAllContainsNameAsync(string search)
+        public async Task<IList<Recipe>> GetAllContainsNameAsync(string search, User user = null)
         {
+            if (user != null)
+                return await _context.Recipes.Where(recipe => recipe.User.Equals(user) && recipe.Name.Contains(search)).OrderByDescending(recipe => recipe.Created).ToListAsync();
+
             return await _context.Recipes.Where(recipe => recipe.Name.Contains(search)).ToListAsync();
+
         }
 
         public async Task<bool> UpdateAsync(Recipe recipe)
@@ -62,11 +66,6 @@ namespace PlanFood.Mvc.Services
         public async Task<IList<Recipe>> RecipeUserListAsync(User user)
         {
             return await _context.Recipes.Where(recipe => recipe.User.Equals(user)).OrderByDescending(recipe => recipe.Created).ToListAsync();
-        }
-
-        public async Task<IList<Recipe>> RecipeUserListContainsByNameAsync(User user, string search)
-        {
-            return await _context.Recipes.Where(recipe => recipe.User.Equals(user) && recipe.Name.Contains(search)).OrderByDescending(recipe => recipe.Created).ToListAsync();
         }
     }
 }

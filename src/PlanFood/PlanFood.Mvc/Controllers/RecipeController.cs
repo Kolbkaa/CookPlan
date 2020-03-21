@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Models.ViewModels;
 using PlanFood.Mvc.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Controllers
@@ -68,17 +67,17 @@ namespace PlanFood.Mvc.Controllers
         {
 
             var user = await _userManager.GetUserAsync(User);
-            
+
             var viewModel = new ListRecipeViewModel();
 
             if (string.IsNullOrWhiteSpace(search))
             {
-               viewModel.RecipeList = await _recipeService.RecipeUserListAsync(user);
+                viewModel.RecipeList = await _recipeService.RecipeUserListAsync(user);
 
             }
             else
             {
-                viewModel.RecipeList = await _recipeService.RecipeUserListContainsByNameAsync(user, search);
+                viewModel.RecipeList = await _recipeService.GetAllContainsNameAsync(search, user);
                 viewModel.Search = search;
             }
 
