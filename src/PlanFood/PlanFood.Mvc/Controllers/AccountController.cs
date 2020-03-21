@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Models.ViewModels;
 
 namespace PlanFood.Mvc.Controllers
-{
+{    
     public class AccountController : Controller
     {
         protected UserManager<User> UserManager { get; }
@@ -86,6 +88,7 @@ namespace PlanFood.Mvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+<<<<<<< Updated upstream
         [HttpGet]
         public async Task<IActionResult> Edit()
         {
@@ -119,6 +122,41 @@ namespace PlanFood.Mvc.Controllers
                 ModelState.AddModelError("", error.Description);
             }
             return View(editUserViewModel);
+=======
+        [Authorize]
+        [HttpGet]
+        public IActionResult EditUserPass()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditUserPass(EditUserPassViewModel editUserPassViewModel)
+        {
+            if (!ModelState.IsValid) return View();
+            
+            var user = await UserManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+            
+            //var token = await UserManager.GeneratePasswordResetTokenAsync(user);
+            //var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);
+            await UserManager.RemovePasswordAsync(user);
+            await UserManager.AddPasswordAsync(user, editUserPassViewModel.Password.GetHashCode);
+            return RedirectToAction("Index", "Dashboard");
+            //if (result.Succeeded)
+            //{
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
+            //foreach (var error in result.Errors)
+            //{
+            //    ModelState.AddModelError(string.Empty, error.Description);
+            //}
+            //return View();
+>>>>>>> Stashed changes
         }
     }
 }
