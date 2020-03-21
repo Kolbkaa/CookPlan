@@ -40,5 +40,11 @@ namespace PlanFood.Mvc.Controllers
             };
             return View(dasboardViewModel);
         }
+
+        public async Task<IActionResult> Remove(int id)
+        {
+            await _recipeService.DeleteAsync(id);
+            return RedirectToAction("Index");
+        }
     }
 }
