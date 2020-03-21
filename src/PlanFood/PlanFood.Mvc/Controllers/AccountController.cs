@@ -85,5 +85,40 @@ namespace PlanFood.Mvc.Controllers
             await SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            var editUserViewModel = new EditUserViewModel
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email
+            };
+
+            return View(editUserViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditUserViewModel editUserViewModel)
+        {
+            if (!ModelState.IsValid) return View(editUserViewModel);
+
+            var user = await UserManager.GetUserAsync(User);
+            user.Name = editUserViewModel.Name;
+            user.Surname = editUserViewModel.Surname;
+            user.Email = editUserViewModel.Email;
+            var result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View(editUserViewModel);
+        }
     }
 }
