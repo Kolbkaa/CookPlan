@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Models.ViewModels;
 using PlanFood.Mvc.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Controllers
@@ -48,7 +48,7 @@ namespace PlanFood.Mvc.Controllers
                 Ingredients = model.Ingredients,
                 Description = model.Description,
                 User = user
-                
+
             };
 
             var result = await _recipeService.CreateAsync(recipe);
@@ -63,11 +63,26 @@ namespace PlanFood.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List([FromQuery] string search)
         {
+
             var user = await _userManager.GetUserAsync(User);
-            var recipeList = await _recipeService.RecipeUserListAsync(user);
-            return View(recipeList);
+
+            var viewModel = new ListRecipeViewModel();
+
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                viewModel.RecipeList = await _recipeService.RecipeUserListAsync(user);
+
+            }
+            else
+            {
+                viewModel.RecipeList = await _recipeService.GetAllContainsNameAsync(search, user);
+                viewModel.Search = search;
+            }
+
+            return View(viewModel);
+
         }
 
         [HttpGet]
@@ -97,7 +112,7 @@ namespace PlanFood.Mvc.Controllers
                 Preparation = recipeToEdit.Preparation,
                 PreparationTime = recipeToEdit.PreparationTime,
                 Created = recipeToEdit.Created,
-                
+
             };
             return View(viewModel);
         }

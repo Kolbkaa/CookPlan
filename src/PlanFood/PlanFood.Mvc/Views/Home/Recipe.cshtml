@@ -1,4 +1,4 @@
-﻿@model IList<Recipe>
+﻿@model ListRecipeViewModel
 @{
     ViewData["Title"] = "Recipe";
     Layout = "_Layout";
@@ -15,6 +15,15 @@
 </section>
 
 <section class="mr-4 ml-4">
+    <div>
+        <form asp-action="Recipe" asp-controller="Home" method="get">
+            <div class="form-group">
+                <label class="ml-2">Wyszukaj:</label>
+                <input class="form-control ml-2" asp-for="Search" />
+                <button class="btn btn-secondary m-2" type="submit">Wyszukaj</button>
+            </div>
+        </form>
+    </div>
     <table class="table">
         <thead>
             <tr class="d-flex text-color-darker">
@@ -25,7 +34,7 @@
             </tr>
         </thead>
         <tbody class="text-color-lighter">
-            @foreach (var item in @Model)
+            @foreach (var item in @Model.RecipeList)
             {
                 <tr class="d-flex">
                     <th scope="row" class="col-1">@item.Id</th>
@@ -36,6 +45,6 @@
                     <td class="col-1"><a asp-action="Detail" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-info rounded-0 text-light">Szczegóły</a></td>
                 </tr>
             }
-            </tbody>
+        </tbody>
     </table>
 </section>
