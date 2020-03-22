@@ -121,8 +121,37 @@ namespace PlanFood.Mvc.Controllers
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
-            return View(editUserViewModel);
+                return View(editUserViewModel);
+        }
+            
+        public IActionResult EditUserPass()
+        {
+            return View();
         }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditUserPass(EditUserPassViewModel editUserPassViewModel)
+        {
+            if (!ModelState.IsValid) return View();
+
+            var user = await UserManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var token = await UserManager.GeneratePasswordResetTokenAsync(user);
+            var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);         
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View();
+        }
     }
 }

@@ -50,6 +50,7 @@
                 }
             </h2>
             <table class="table">
+                @if (@Model.Plan != null)
                 @foreach (var dayName in @Model.DayNames)
                 {
                     <thead>

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using PlanFood.Mvc.Models.ViewModels;
 using PlanFood.Mvc.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Controllers
 {
@@ -24,10 +22,22 @@ namespace PlanFood.Mvc.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Recipe([FromServices] IRecipeService recipeService)
+        public async Task<IActionResult> Recipe([FromServices] IRecipeService recipeService,[FromQuery] string search)
         {
-            var recipeList = await recipeService.GetAllAsync();
-            return View(recipeList);
+            var viewModel = new ListRecipeViewModel();
+
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                viewModel.RecipeList = await recipeService.GetAllAsync();
+
+            }
+            else
+            {
+                viewModel.RecipeList = await recipeService.GetAllContainsNameAsync(search);
+                viewModel.Search = search;
+            }
+
+            return View(viewModel);
         }
     }
 }
