@@ -89,7 +89,7 @@ namespace PlanFood.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> EditUser()
         {
             var user = await UserManager.GetUserAsync(User);
             var editUserViewModel = new EditUserViewModel
@@ -103,7 +103,7 @@ namespace PlanFood.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditUserViewModel editUserViewModel)
+        public async Task<IActionResult> EditUser(EditUserViewModel editUserViewModel)
         {
             if (!ModelState.IsValid) return View(editUserViewModel);
 
