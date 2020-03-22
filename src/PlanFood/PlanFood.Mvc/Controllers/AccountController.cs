@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Models.ViewModels;
 
 namespace PlanFood.Mvc.Controllers
-{
+{    
     public class AccountController : Controller
     {
         protected UserManager<User> UserManager { get; }
@@ -88,6 +89,41 @@ namespace PlanFood.Mvc.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> EditUser()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            var editUserViewModel = new EditUserViewModel
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email
+            };
+
+            return View(editUserViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel editUserViewModel)
+        {
+            if (!ModelState.IsValid) return View(editUserViewModel);
+
+            var user = await UserManager.GetUserAsync(User);
+            if (user == null) return View("Login");
+            user.Name = editUserViewModel.Name;
+            user.Surname = editUserViewModel.Surname;
+            user.Email = editUserViewModel.Email;
+            var result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+                return View(editUserViewModel);
+        }
+            
         public IActionResult EditUserPass()
         {
             return View();
