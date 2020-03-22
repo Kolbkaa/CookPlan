@@ -178,10 +178,10 @@ namespace PlanFood.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmRemoveRecipe(int id, int id2) 
+        public async Task<IActionResult> ConfirmRemoveRecipe(int id, int planId) 
         {
             await _planService.RemoveRecipeToPlanAsync(id);
-            return RedirectToAction("Details", new {id = id2});
+            return RedirectToAction("Details", new {id = planId});
         }
 
     }

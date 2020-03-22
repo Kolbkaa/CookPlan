@@ -57,7 +57,7 @@
                                 <td class="col-2">@item.MealName</td>
                                 <td class="col-7">@item.Recipe.Name</td>
                                 <td class="col-1 center">
-                                    <a asp-action="ConfirmRemoveRecipe" asp-controller="Plan" asp-route-id="@item.ID" asp-route-id2="@item.Recipe.Id" class="btn btn-danger rounded-0 text-light m-1" onclick="return confirm('Czy na pewno chcesz usunąć plan z listy')">Usuń</a>
+                                    <a asp-action="ConfirmRemoveRecipe" asp-controller="Plan" asp-route-id="@item.ID" asp-route-planId="@item.PlanId" class="btn btn-danger rounded-0 text-light m-1" onclick="return confirm('Czy na pewno chcesz usunąć plan z listy')">Usuń</a>
                                 </td>
                                 <td class="col-2 center">
                                     <a asp-action="Details" asp-controller="Recipe" asp-route-id="@item.Recipe.Id" class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
