@@ -113,15 +113,18 @@ namespace PlanFood.Mvc.Controllers
             user.Surname = editUserViewModel.Surname;
             user.Email = editUserViewModel.Email;
             var result = await UserManager.UpdateAsync(user);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Dashboard");
-            }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-                return View(editUserViewModel);
+
+            return await Validation("Index", "Dashboard", result, editUserViewModel);
+
+            //if (result.Succeeded)
+            //{
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
+            //foreach (var error in result.Errors)
+            //{
+            //    ModelState.AddModelError(string.Empty, error.Description);
+            //}
+            //    return View(editUserViewModel);
         }
             
         public IActionResult EditUserPass()
@@ -142,10 +145,25 @@ namespace PlanFood.Mvc.Controllers
             }
 
             var token = await UserManager.GeneratePasswordResetTokenAsync(user);
-            var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);         
+            var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);
+            //if (result.Succeeded)
+            //{
+            //    return RedirectToAction("Index", "Dashboard");
+            //}
+            //foreach (var error in result.Errors)
+            //{
+            //    ModelState.AddModelError(string.Empty, error.Description);
+            //}
+            //return View();
+            
+            return await Validation("Index", "Dashboard", result, null);
+        }
+
+        public async Task<IActionResult> Validation (string action, string controller, IdentityResult result, Object model)
+        {
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction(action, controller);
             }
             foreach (var error in result.Errors)
             {
