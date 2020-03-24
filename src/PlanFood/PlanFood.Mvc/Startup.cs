@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +30,10 @@ namespace PlanFood.Mvc
 			services.Configure<IdentityOptions>(options =>
 			{
 				options.User.RequireUniqueEmail = true;
-			});
+            });
+
+            services.ConfigureApplicationCookie(
+                options => options.AccessDeniedPath = new PathString("/Dashboard/index"));
 
 			services.AddScoped<IBookService, BookService>();
 			services.AddScoped<IRecipeService, RecipeService>();
@@ -40,7 +44,7 @@ namespace PlanFood.Mvc
         }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public  void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
@@ -53,6 +57,8 @@ namespace PlanFood.Mvc
 			}
 
 			app.UseStaticFiles();
+
+            app.SeedAdminUser();
 
             app.UseAuthentication();
             app.UseRouting();
