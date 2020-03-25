@@ -20,7 +20,8 @@ namespace PlanFood.Mvc
         public Startup()
         {
             var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile("appsettings.json").AddEnvironmentVariables("FOODAPP_");
+            configurationBuilder.AddJsonFile("appsettings.json",true)
+                .AddEnvironmentVariables("FOODAPP_");
             Configuration = configurationBuilder.Build();
         }
 		public void ConfigureServices(IServiceCollection services)
