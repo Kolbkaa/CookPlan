@@ -7,7 +7,6 @@ EXPOSE 443
 COPY ["PlanFood.Mvc.csproj", "./"]
 RUN dotnet restore "./PlanFood.Mvc.csproj"
 COPY . .
-WORKDIR /src/.
 RUN dotnet build "PlanFood.Mvc.csproj" -c Release -o /app/build
 
 FROM build AS publish
