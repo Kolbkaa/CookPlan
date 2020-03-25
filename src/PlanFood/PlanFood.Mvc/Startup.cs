@@ -39,6 +39,7 @@ namespace PlanFood.Mvc
 			services.AddScoped<IRecipeService, RecipeService>();
 			services.AddScoped<IDayNameService,DayNameService>();
 			services.AddScoped<IPlanService,PlanService>();
+			services.AddScoped<IAdminService, AdminService>();
 
             services.AddControllersWithViews();
         }

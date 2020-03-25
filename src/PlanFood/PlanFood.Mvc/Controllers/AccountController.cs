@@ -114,17 +114,7 @@ namespace PlanFood.Mvc.Controllers
             user.Email = editUserViewModel.Email;
             var result = await UserManager.UpdateAsync(user);
 
-            return await Validation("Index", "Dashboard", result, editUserViewModel);
-
-            //if (result.Succeeded)
-            //{
-            //    return RedirectToAction("Index", "Dashboard");
-            //}
-            //foreach (var error in result.Errors)
-            //{
-            //    ModelState.AddModelError(string.Empty, error.Description);
-            //}
-            //    return View(editUserViewModel);
+            return Validation("Index", "Dashboard", result, editUserViewModel);
         }
             
         public IActionResult EditUserPass()
@@ -146,20 +136,11 @@ namespace PlanFood.Mvc.Controllers
 
             var token = await UserManager.GeneratePasswordResetTokenAsync(user);
             var result = await UserManager.ResetPasswordAsync(user, token, editUserPassViewModel.Password);
-            //if (result.Succeeded)
-            //{
-            //    return RedirectToAction("Index", "Dashboard");
-            //}
-            //foreach (var error in result.Errors)
-            //{
-            //    ModelState.AddModelError(string.Empty, error.Description);
-            //}
-            //return View();
             
-            return await Validation("Index", "Dashboard", result, null);
+            return Validation("Index", "Dashboard", result, null);
         }
 
-        public async Task<IActionResult> Validation (string action, string controller, IdentityResult result, Object model)
+        public IActionResult Validation (string action, string controller, IdentityResult result, Object model)
         {
             if (result.Succeeded)
             {

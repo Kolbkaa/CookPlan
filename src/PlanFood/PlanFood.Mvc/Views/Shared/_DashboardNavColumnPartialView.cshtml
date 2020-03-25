@@ -29,12 +29,16 @@
             <i class="fas fa-angle-right"></i>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" asp-controller="Admin" asp-action="Show">
-            <span>Użytkownicy</span>
-            <i class="fas fa-angle-right"></i>
-        </a>
-    </li>
+    @if (User.IsInRole("Admin"))
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Admin" asp-action="Show">
+                <span>Użytkownicy</span>
+                <i class="fas fa-angle-right"></i>
+            </a>
+        </li>
+    }
+
     <li class="nav-item">
         <a asp-action="Logout" asp-controller="Account" class="nav-link">
             <span>Wyloguj</span>

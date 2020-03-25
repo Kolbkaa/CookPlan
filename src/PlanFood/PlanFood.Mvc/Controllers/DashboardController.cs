@@ -12,7 +12,7 @@ using PlanFood.Mvc.Services.Interfaces;
 
 namespace PlanFood.Mvc.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly IRecipeService _recipeService;
