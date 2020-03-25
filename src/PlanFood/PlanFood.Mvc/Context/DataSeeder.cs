@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using PlanFood.Mvc.Models.Db;
+using PlanFood.Mvc.Tools;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using PlanFood.Mvc.Tools;
 
 namespace PlanFood.Mvc.Context
 {
@@ -35,10 +34,9 @@ namespace PlanFood.Mvc.Context
 
             var roleTask = userManager.AddToRoleAsync(user, "admin");
             Task.WaitAll(roleTask);
-
             return app;
         }
 
-        
+
     }
 }
