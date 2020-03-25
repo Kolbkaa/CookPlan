@@ -10,6 +10,7 @@ using PlanFood.Mvc.Context;
 using PlanFood.Mvc.Models.Db;
 using PlanFood.Mvc.Services;
 using PlanFood.Mvc.Services.Interfaces;
+using PlanFood.Mvc.Tools;
 
 namespace PlanFood.Mvc
 {
@@ -19,13 +20,12 @@ namespace PlanFood.Mvc
 
         public Startup()
         {
-            var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile("appsettings.json",true)
-                .AddEnvironmentVariables("FOODAPP_");
-            Configuration = configurationBuilder.Build();
-        }
+            
+            Configuration = AppVariableConfiguration.ConfigurationRoot();
+		}
 		public void ConfigureServices(IServiceCollection services)
-		{
+        {
+            var cs = Configuration.GetConnectionString("SQL");
 			services.AddDbContext<PlanFoodContext>(builder => builder.UseSqlServer(Configuration.GetConnectionString("SQL")));
 			services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<PlanFoodContext>().AddDefaultTokenProviders();
 			services.Configure<IdentityOptions>(options =>

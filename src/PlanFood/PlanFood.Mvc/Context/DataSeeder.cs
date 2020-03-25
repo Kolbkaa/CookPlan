@@ -5,19 +5,21 @@ using PlanFood.Mvc.Models.Db;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using PlanFood.Mvc.Tools;
 
 namespace PlanFood.Mvc.Context
 {
     public static class DataSeeder
     {
-  
+
 
         public static IApplicationBuilder SeedAdminUser(this IApplicationBuilder app)
         {
             using var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var planFoodContext = service.ServiceProvider.GetRequiredService<PlanFoodContext>();
             var userManager = service.ServiceProvider.GetRequiredService<UserManager<User>>();
-            var configuration = service.ServiceProvider.GetRequiredService<IConfiguration>();
+
+            var configuration = AppVariableConfiguration.ConfigurationRoot();
 
 
             if (planFoodContext.Users.Any()) return app;
@@ -36,5 +38,7 @@ namespace PlanFood.Mvc.Context
 
             return app;
         }
+
+        
     }
 }
