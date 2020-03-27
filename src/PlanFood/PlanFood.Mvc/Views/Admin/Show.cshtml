@@ -34,7 +34,7 @@
                             <td class="col-3">@user.Name</td>
                             <td class="col-6">@user.Surname</td>
                             <td class="col-2 center">
-                                @if (user.LockoutEnabled)
+                                @if (user.LockoutEnabled && user.LockoutEnd != null)
                                 {
                                     <a asp-action="Unlock" asp-controller="Admin" asp-route-id="@user.Id" class="btn btn-danger rounded-0 text-light m-1">Odblokuj</a>
                                 }
