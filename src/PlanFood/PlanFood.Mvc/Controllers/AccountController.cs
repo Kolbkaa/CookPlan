@@ -69,10 +69,17 @@ namespace PlanFood.Mvc.Controllers
             if (ModelState.IsValid)
             {
                 var result = await SignInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false);
+               // var user = await SignInManager.GetExternalLoginInfoAsync(loginModel.Email);
+                
 
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Dashboard");
+                }
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Uzytkownik jest zablokowany");
+                   // return View(loginModel);
                 }
 
                 ModelState.AddModelError("", "Błąd logowania");
@@ -84,7 +91,7 @@ namespace PlanFood.Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await SignInManager.SignOutAsync();
+            await SignInManager.SignOutAsync(); 
             return RedirectToAction("Index", "Home");
         }
 
