@@ -69,9 +69,15 @@ namespace PlanFood.Mvc.Controllers
             if (ModelState.IsValid)
             {
                 var result = await SignInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false);               
+
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Dashboard");
+                }
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Uzytkownik jest zablokowany");
+                   // return View(loginModel);
                 }
 
                 if (result.IsLockedOut) 
