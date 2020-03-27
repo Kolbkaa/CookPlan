@@ -68,9 +68,7 @@ namespace PlanFood.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await SignInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false);
-               // var user = await SignInManager.GetExternalLoginInfoAsync(loginModel.Email);
-                
+                var result = await SignInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false);               
 
                 if (result.Succeeded)
                 {
@@ -82,9 +80,15 @@ namespace PlanFood.Mvc.Controllers
                    // return View(loginModel);
                 }
 
-                ModelState.AddModelError("", "Błąd logowania");
+                if (result.IsLockedOut) 
+                {
+                    ModelState.AddModelError("", "Uzytkownik jest zablokowany");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Błąd logowania");
+                }
             }
-
             return View(loginModel);
         }
 
