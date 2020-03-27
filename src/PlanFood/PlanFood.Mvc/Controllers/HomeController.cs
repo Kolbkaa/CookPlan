@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlanFood.Mvc.Models.ViewModels;
 using PlanFood.Mvc.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace PlanFood.Mvc.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IRecipeService _recipeService;
+
+        public HomeController(IRecipeService recipeService)
+        {
+            _recipeService = recipeService;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -38,6 +46,12 @@ namespace PlanFood.Mvc.Controllers
             }
 
             return View(viewModel);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var recipe = await _recipeService.GetAsync(id);
+            return View(recipe);
         }
     }
 }
